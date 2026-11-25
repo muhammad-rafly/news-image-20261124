@@ -248,41 +248,35 @@ function build(): void {
   drawTextCentred(DATE, W / 2, 118, 3, WHITE);
 
   // 3. Lead story
-  drawText("MARKETS REBOUND AFTER AI SELL-OFF", M, 168, 2, RED);
-  drawText("NVIDIA BRINGS HUANG BACK", M, 190, 6, INK);
-  drawText("SHARES SOAR 31.5% AS NASDAQ JUMPS 6.9% IN SHARP REBOUND", M, 242, 2, INK);
+  drawText("YEAR'S BIGGEST PHARMA DEAL", M, 168, 2, RED);
+  drawText("SANOFI BUYS INSMED", M, 190, 6, INK);
+  drawText("$41 BILLION IN CASH, $175 A SHARE, IN THE YEAR'S BIGGEST PHARMA DEAL", M, 242, 2, INK);
   hRule(M, 262, CW, 2, SOFT_LINE);
   const standfirst =
-    "NVIDIA REINSTATED JENSEN HUANG AS CEO 11 DAYS AFTER HE RESIGNED, " +
-    "REPORTEDLY AFTER DONALD TRUMP INTERVENED. SHARES JUMPED ABOUT 31.5%, " +
-    "ADDING A RECORD $952 BILLION IN MARKET VALUE, AS THE S AND P 500 ROSE 4.7%. " +
-    "SK HYNIX SOARED 20%. SHORT SELLERS LOST ABOUT $12.2 BILLION IN A DAY.";
+    "SANOFI AGREED TO BUY US BIOTECH INSMED FOR $41 BILLION IN CASH, THE " +
+    "YEAR'S LARGEST PHARMA DEAL, AT $175 A SHARE, A 46% PREMIUM. THE DEAL " +
+    "BRINGS TWO RESPIRATORY DRUGS AND A LATE-STAGE PIPELINE AS SANOFI BRACES " +
+    "FOR ITS DUPXENT PATENT CLIFF. IT SHOULD CLOSE IN THE FIRST HALF OF 2027.";
   drawWrapped(standfirst, M, 276, 2, INK, 79, 6);
 
-  // 4. Chart panel (night blue)
+  // 4. Deal-numbers panel (night blue)
   const chartY = 366;
   const chartH = 170;
   fillRect(M, chartY, CW, chartH, BLUE);
-  drawText("THE REBOUND", M + 16, chartY + 12, 3, WHITE);
-  const sub = "ONE-DAY GAINS, 24 NOV 2026";
+  drawText("THE DEAL IN NUMBERS", M + 16, chartY + 12, 3, WHITE);
+  const sub = "SANOFI'S $41 BILLION BET, 24 NOV 2026";
   drawText(sub, M + CW - 16 - textWidth(sub, 2), chartY + 16, 2, LIGHT_GREEN);
-  const baseY = chartY + chartH - 30; // baseline for bars
-  const barW = 130;
-  const bars = [
-    { label: "NVDA", value: "+31.5%", pct: 31.5, cx: M + 150 },
-    { label: "NASDAQ 100", value: "+6.9%", pct: 6.9, cx: M + 476 },
-    { label: "S AND P 500", value: "+4.7%", pct: 4.7, cx: M + 802 },
+  hRule(M + 16, chartY + 48, CW - 32, 2, WHITE);
+  const stats = [
+    { value: "$41.0B", label: "DEAL VALUE", cx: M + 130 },
+    { value: "$175", label: "PER SHARE", cx: M + 368 },
+    { value: "46%", label: "PREMIUM", cx: M + 606 },
+    { value: "H1 2027", label: "CLOSE", cx: M + 844 },
   ];
-  const maxH = 84;
-  for (const b of bars) {
-    const bh = Math.round((b.pct / 31.5) * maxH);
-    fillRect(b.cx - barW / 2, baseY - bh, barW, bh, GREEN);
-    drawTextCentred(b.value, b.cx, baseY - bh - 18, 2, WHITE);
-    drawTextCentred(b.label, b.cx, baseY + 8, 2, WHITE);
+  for (const s of stats) {
+    drawTextCentred(s.value, s.cx, chartY + 78, 4, WHITE);
+    drawTextCentred(s.label, s.cx, chartY + 122, 2, LIGHT_GREEN);
   }
-  hRule(M + 16, baseY, CW - 32, 2, WHITE);
-  // Rising green line, left-low to right-high over the bars.
-  drawLine(M + 40, baseY - 8, M + 912, chartY + 58, LIGHT_GREEN, 4);
 
   // 5. Three columns
   const colY = 552;
@@ -291,26 +285,25 @@ function build(): void {
   const colX = [M, M + colW + colGap, M + 2 * (colW + colGap)];
   const columns = [
     {
-      kicker: "SPACE THREAT",
-      headline: "RUSSIA MAY PUT A NUCLEAR WEAPON IN SPACE",
+      kicker: "YEMEN WAR",
+      headline: "HOUTHIS CLOSE ON ADEN, HIT RIYADH TOWER",
       body:
-        "WESTERN INTELLIGENCE WARNS RUSSIA COULD LAUNCH A NUCLEAR-ARMED " +
-        "SATELLITE AS EARLY AS DECEMBER. NATO CHIEF MARK RUTTE VOWS THE " +
-        "ALLIANCE WILL DEFEND SPACE.",
+        "HOUTHI FIGHTERS ARE 60 KM FROM ADEN AND A SUSPECTED DRONE HIT A " +
+        "RIYADH TOWER, WOUNDING 11.",
     },
     {
-      kicker: "COURT RULING",
-      headline: "ICJ: MYANMAR COMMITTED GENOCIDE",
+      kicker: "WAR IN GAZA",
+      headline: "ISRAEL KILLS HAMAS SECURITY CHIEF IN GAZA",
       body:
-        "THE INTERNATIONAL COURT OF JUSTICE RULED MYANMAR COMMITTED GENOCIDE " +
-        "AGAINST THE ROHINGYA, A LANDMARK VERDICT FOR THE MUSLIM MINORITY.",
+        "AN ISRAELI AIRSTRIKE KILLED NAEEM ABU NAHEL, HAMAS' INTERNAL " +
+        "SECURITY CHIEF, IN GAZA CITY. SEVEN DIED ON TUESDAY.",
     },
     {
-      kicker: "WAR AT SEA",
-      headline: "UKRAINE SINKS RUSSIAN SHIP IN LIBYA",
+      kicker: "EBOLA CRISIS",
+      headline: "EBOLA TEAMS STILL TRAPPED IN CONGO",
       body:
-        "UKRAINIAN SEA DRONES SANK THE RUSSIAN CORVETTE MERKURY IN THE LIBYAN " +
-        "PORT OF BENGHAZI, CARRYING THE WAR INTO THE MEDITERRANEAN.",
+        "EBOLA RESPONDERS REMAIN SHELTERED IN A HOSPITAL IN ITURI, " +
+        "CONGO, AS FIGHTING RAGES NEARBY.",
     },
   ];
   for (let i = 0; i < 3; i++) {
@@ -331,12 +324,12 @@ function build(): void {
   fillRect(M, briefY, CW, briefH, INK);
   drawText("IN BRIEF", M + 16, briefY + 10, 2, RED);
   const briefItems = [
-    "ABU DHABI TALKS END WITH NO BREAKTHROUGH",
-    "RUSSIAN STRIKE ON ZAPORIZHZHIA KILLS 2, WOUNDS 40",
-    "US LOSES MEASLES ELIMINATION STATUS AFTER 25 YEARS",
-    "SANOFI BUYS INSMED FOR $41 BILLION",
-    "US STATES SUE MUSK OVER GROK SEXUALISED IMAGES",
-    "INDIA AND EU SET TO SIGN TRADE DEAL AFTER 20 YEARS",
+    "ZAPORIZHZHIA STRIKE KILLS 2, WOUNDS 40",
+    "GERMANY FIRST TO GET UKRAINE DELTA SYSTEM",
+    "WALL STREET GIVES BACK MONDAY'S GAINS, NVDA -5.8%",
+    "CARTAGENA HOSTAGE CRISIS: 25 HELD",
+    "SOUTH KOREA OFFERS $375,000 TO CATCH AI CHEATS",
+    "IRAQ PM ORDERS OIL MINISTRY TO RUN KURD FIELDS",
   ];
   for (let i = 0; i < briefItems.length; i++) {
     const x = M + 16;
